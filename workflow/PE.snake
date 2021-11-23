@@ -138,7 +138,7 @@ rule cufflinks_fpkm:
     input:
         bam="results/star_align/{sample}/{sample}.Aligned.sortedByCoord.out.bam"
     output:
-        genes="results/cufflinks_fpkm/{sample}/genes.fpkm_tracking"
+        genes="results/cufflinks_fpkm/{sample}/genes.fpkm_tracking",
         isoforms="results/cufflinks_fpkm/{sample}/isoforms.fpkm_tracking"
     params:
         refgtf=config["refgtf"],
@@ -195,13 +195,11 @@ rule multiqc:
 
 rule summarize_fpkm:
     input:
-        genes=expand("results/cufflinks_fpkm/{sample}/genes.fpkm_tracking"), sample=config["read1"]),
+        genes=expand("results/cufflinks_fpkm/{sample}/genes.fpkm_tracking", sample=config["read1"]),
         isoforms=expand("results/cufflinks_fpkm/{sample}/isoforms.fpkm_tracking", sample=config["read1"])
     output:
         genes="results/summarize_fpkm/expression.genes.xlsx",
         isoforms="results/summarize_fpkm/expression.isoforms.xlsx"
-    params:
-        refann=config["refann"]
     log:
         "results/logs/summarize_fpkm/summarize_fpkm.log"
     conda:
