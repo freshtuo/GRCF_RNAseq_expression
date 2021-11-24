@@ -87,28 +87,14 @@ rule star_align:
     output:
         bam="results/star_align/{sample}/{sample}.Aligned.sortedByCoord.out.bam",
         bai="results/star_align/{sample}/{sample}.Aligned.sortedByCoord.out.bam.bai"
-    params:
-        star=config["star"],
-        samtools=config["samtools"],
-        staridx=config["staridx"],
-        seedLmax=config["seedLmax"],
-        multimapNmax=config["multimapNmax"],
-        overhangMin=config["overhangMin"],
-        DBoverhangMin=config["DBoverhangMin"],
-        libtype=config["libtype"]
     log:
         bam="results/logs/star_align/{sample}.star.log",
         bai="results/logs/star_align/{sample}.samtools.log"
-    #conda:
-    #    "../envs/star.yaml"
+    conda:
+        "../envs/star.yaml"
     threads: 8
-    run:
-        if params.libtype == "fr-unstranded":
-            shell("{params.star} --runThreadN {threads} --genomeDir {params.staridx} --readFilesIn {input.read1} {input.read2} --readFilesCommand zcat --outFileNamePrefix results/star_align/{wildcards.sample}/{wildcards.sample}. --outSAMstrandField intronMotif --outReadsUnmapped Fastx --outSAMtype BAM SortedByCoordinate --outFilterType BySJout --outFilterMultimapNmax {params.multimapNmax} --alignSJoverhangMin {params.overhangMin} --alignSJDBoverhangMin {params.DBoverhangMin} --seedSearchStartLmax {params.seedLmax} --twopassMode Basic >{log.bam} 2>&1")
-        else:
-            shell("{params.star} --runThreadN {threads} --genomeDir {params.staridx} --readFilesIn {input.read1} {input.read2} --readFilesCommand zcat --outFileNamePrefix results/star_align/{wildcards.sample}/{wildcards.sample}. --outReadsUnmapped Fastx --outSAMtype BAM SortedByCoordinate --outFilterType BySJout --outFilterMultimapNmax {params.multimapNmax} --alignSJoverhangMin {params.overhangMin} --alignSJDBoverhangMin {params.DBoverhangMin} --seedSearchStartLmax {params.seedLmax} --twopassMode Basic >{log.bam} 2>&1")
-        shell("gzip results/star_align/{wildcards.sample}/{wildcards.sample}.Unmapped.out.mate*")
-        shell("{params.samtools} index -@ {threads} {output.bam} >{log.bai} 2>&1")
+    script:
+        "../scripts/star_align.py"
 
 rule bam_qc:
     input:

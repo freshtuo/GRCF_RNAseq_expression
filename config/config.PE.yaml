@@ -16,8 +16,6 @@ read2:
 group:
     DMSO: ['DMSO_1','DMSO_2','DMSO_3']
     HX531: ['HX531_1','HX531_2','HX531_3']
-star: /data/gc-core/taz2008/Softwares/STAR-2.5.2b/bin/Linux_x86_64_static/STAR
-samtools: /usr/local/bin/samtools
 overlap: 5
 minlen: 35
 qscore: 10
