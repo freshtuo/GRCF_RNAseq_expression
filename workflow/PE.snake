@@ -14,7 +14,8 @@ rule all:
         bamqc=expand("results/bam_qc/{sample}.rRNA_stat.txt", sample=config["read1"]),
         fpkm=expand("results/cufflinks_fpkm/{sample}/genes.fpkm_tracking", sample=config["read1"]),
         counts=expand("results/htseq_count_reads/{sample}.genes.HTSeq.count", sample=config["read1"]),
-        mutiqc="results/multiqc/multiqc_report.html"
+        mutiqc="results/multiqc/multiqc_report.html",
+        fpkmsum="results/summarize_fpkm/expression.genes.xlsx"
 
 rule rename_fastq:
     input:
@@ -195,11 +196,12 @@ rule multiqc:
 
 rule summarize_fpkm:
     input:
-        genes=expand("results/cufflinks_fpkm/{sample}/genes.fpkm_tracking", sample=config["read1"]),
-        isoforms=expand("results/cufflinks_fpkm/{sample}/isoforms.fpkm_tracking", sample=config["read1"])
+        gene=expand("results/cufflinks_fpkm/{sample}/genes.fpkm_tracking", sample=config["read1"]),
+        isoform=expand("results/cufflinks_fpkm/{sample}/isoforms.fpkm_tracking", sample=config["read1"])
     output:
-        genes="results/summarize_fpkm/expression.genes.xlsx",
-        isoforms="results/summarize_fpkm/expression.isoforms.xlsx"
+        gene="results/summarize_fpkm/expression.genes.xlsx",
+        isoform="results/summarize_fpkm/expression.isoforms.xlsx",
+        box="results/summarize_fpkm/fpkm.genes.boxplot.png"
     log:
         "results/logs/summarize_fpkm/summarize_fpkm.log"
     conda:
