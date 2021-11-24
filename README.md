@@ -6,3 +6,6 @@
 ## Overview
 
 A workflow to process bulk RNA-seq samples for differential expression analysis.
+
+![workflow](chart/dag.svg)
+
