@@ -15,7 +15,8 @@ rule all:
         fpkm=expand("results/cufflinks_fpkm/{sample}/genes.fpkm_tracking", sample=config["read1"]),
         counts=expand("results/htseq_count_reads/{sample}.genes.HTSeq.count", sample=config["read1"]),
         mutiqc="results/multiqc/multiqc_report.html",
-        fpkmsum="results/summarize_fpkm/expression.genes.xlsx"
+        fpkmsum="results/summarize_fpkm/expression.genes.xlsx",
+        countssum="results/summarize_counts/raw_counts_genes.txt.gz"
 
 rule rename_fastq:
     input:
@@ -208,4 +209,17 @@ rule summarize_fpkm:
         "../envs/python.yaml"
     script:
         "../scripts/summarize_fpkm.py"
+
+rule summarize_counts:
+    input:
+        counts=expand("results/htseq_count_reads/{sample}.genes.HTSeq.count", sample=config["read1"])
+    output:
+        counts="results/summarize_counts/raw_counts_genes.txt.gz",
+        other="results/summarize_counts/raw_counts_other.txt.gz"
+    log:
+        "results/logs/summarize_counts/summarize_counts.log"
+    conda:
+        "../envs/python.yaml"
+    script:
+        "../scripts/summarize_counts.py"
 
