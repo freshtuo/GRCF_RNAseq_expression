@@ -45,7 +45,11 @@ else:
     sys.exit(1)
 
 # run HTSeq-count to generate per-gene read counts
-command = 'samtools sort -n -@ {} -m {} -T results/htseq_count_reads/sort.tmp.{} -O sam {} |htseq-count --format=sam --stranded={} --minaqual={} --type=exon --idattr=gene_id --mode=union - {} >{}'.format(threads,mem,snakemake.wildcards,bamfile,strand,minaqual,refgtf,countfile)
+command = None
+if 'read2' in snakemake.input:# PE
+    command = 'samtools sort -n -@ {} -m {} -T results/htseq_count_reads/sort.tmp.{} -O sam {} |htseq-count --format=sam --stranded={} --minaqual={} --type=exon --idattr=gene_id --mode=union - {} >{}'.format(threads,mem,snakemake.wildcards,bamfile,strand,minaqual,refgtf,countfile)
+else:# SE
+    command = 'htseq-count --format=bam --stranded={} --minaqual={} --type=exon --idattr=gene_id --mode=union {} {} >{}'.format(strand,minaqual,bamfile,refgtf,countfile)
 
 with gzip.open(htseq_log_file, 'wt') as flog:
     with redirect_stdout(flog):
