@@ -1,4 +1,4 @@
-configfile: "config/config.yaml"
+configfile: "config/config.PE.yaml"
 
 def get_read1_file(wildcards):
     return config["read1"][wildcards.sample]
