@@ -1,4 +1,4 @@
-cwd: /data/gc-core/taz2008/Pipelines/RNAseq/GRCF_RNAseq_expression
+# input fastq files
 read1:
     DMSO_1: data/fastq/Airway_plus_DMSO_1_S0_L000_R1_001.fastq.gz
     DMSO_2: data/fastq/Airway_plus_DMSO_2_S0_L000_R1_001.fastq.gz
@@ -13,27 +13,46 @@ read2:
     HX531_1: data/fastq/Airway_plus_HX531_1_S0_L000_R2_001.fastq.gz
     HX531_2: data/fastq/Airway_plus_HX531_2_S0_L000_R2_001.fastq.gz
     HX531_3: data/fastq/Airway_plus_HX531_3_S0_L000_R2_001.fastq.gz
+
+# sample grouping information
 group:
     DMSO: ['DMSO_1','DMSO_2','DMSO_3']
     HX531: ['HX531_1','HX531_2','HX531_3']
+
+# library type
+libtype: fr-firststrand
+#libtype: fr-unstranded
+#libtype: fr-secondstrand
+
+# cutadapt parameters
 overlap: 5
 minlen: 35
 qscore: 10
 adapter3: AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC
 adapter5: AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT
+
+# STAR parameters
 staridx: /data/gc-core/taz2008/RNAseq/Project_Shuibing_200401_ANALYSIS/custom_ref/Sequence/StarIndex/100bp
 seedLmax: 30
 multimapNmax: 20
 overhangMin: 5
 DBoverhangMin: 1
-libtype: fr-firststrand
+
+# RSeQC parameters
 hkgs: /data/gc-core/taz2008/Softwares/RSeQC-2.6.2/db/GRCh37.HouseKeepingGenes.bed
 rsgs: /data/gc-core/taz2008/Softwares/RSeQC-2.6.2/db/GRCh37_RefSeq.bed
 rrnas: /data/gc-core/taz2008/Softwares/RSeQC-2.6.2/db/GRCh37_rRNA.bed
+
+# Cufflinks parameters
 refgtf: /data/gc-core/taz2008/RNAseq/Project_Shuibing_200401_ANALYSIS/custom_ref/Annotation/Genes/gene.gtf
 refseq: /data/gc-core/taz2008/RNAseq/Project_Shuibing_200401_ANALYSIS/custom_ref/Sequence/WholeGenomeFasta/genome.fa
 maskgtf: /data/gc-core/database/Refs/Homo_sapiens/Ensembl/GRCh37/Annotation/Genes/mask/GRCh37.rRNA.tRNA.chrM.gtf
-refann: /data/gc-core/taz2008/Pipelines/RNAseq/GRCF_RNAseq_expression/source/GRCh37.biomart.txt.gz
 maxBFrag: 100000000
+
+# HTSeq-count parameters
 minaqual: 10
 mem: 1G
+
+# gene annotations
+refann: /data/gc-core/taz2008/Pipelines/RNAseq/GRCF_RNAseq_expression/source/GRCh37.biomart.txt.gz
+
