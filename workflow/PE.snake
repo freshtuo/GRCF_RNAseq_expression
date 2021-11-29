@@ -89,7 +89,8 @@ rule star_align:
         bai="results/star_align/{sample}/{sample}.Aligned.sortedByCoord.out.bam.bai"
     log:
         bam="results/logs/star_align/{sample}.star.log",
-        bai="results/logs/star_align/{sample}.samtools.log"
+        bai="results/logs/star_align/{sample}.samtools.log",
+        err="results/logs/star_align/{sample}.err.log"
     conda:
         "../envs/star.yaml"
     threads: 8

@@ -30,7 +30,7 @@ bamprefix= bamfile.replace('Aligned.sortedByCoord.out.bam','')
 bamdir = os.path.dirname(bamfile)
 
 # library type
-libtype = snakemake.params['libtype']
+libtype = snakemake.config['libtype']
 
 # indexed reference genome folder
 staridx = snakemake.config["staridx"]
@@ -47,6 +47,7 @@ threads = snakemake.threads
 # log file
 star_log_file = snakemake.log['bam']
 samtools_log_file = snakemake.log['bai']
+err_log_file = snakemake.log['err']
 
 # compatibility for Cufflinks
 flag = ''
@@ -70,7 +71,7 @@ def run_command(command):
     sys.stdout.flush()
 
 # run
-with gzip.open(htseq_log_file, 'wt') as flog:
+with open(err_log_file, 'w') as flog:
     with redirect_stdout(flog):
         # run STAR
         run_command(star_command)
