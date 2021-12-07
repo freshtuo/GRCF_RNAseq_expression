@@ -56,6 +56,8 @@ def annotate_genes(merged_table, refann_file):
     refann.rename(columns={'Gene stable ID':'gene_id','Chromosome/scaffold name':'chromosome','Gene type':'gene_type','Gene description':'description'}, inplace=True)
     # fix strand info
     refann['strand'] = refann['Strand'].apply(lambda x: '+' if x > 0 else '-')
+    # dedup (use the first entry in case multiple annotations are found for a give ensembl id)
+    refann.drop_duplicates(subset=['gene_id'], keep='first', inplace=True)
     # merge annotations into the FPKM table
     return pd.merge(merged_table, refann[['gene_id','chromosome','strand','gene_type','description']], how='left', on='gene_id')
 
