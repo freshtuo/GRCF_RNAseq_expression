@@ -6,51 +6,53 @@ def get_read1_file(wildcards):
 def get_read2_file(wildcards):
     return config["read2"][wildcards.sample]
 
+project=config["project"]
+
 rule all:
     input:
-        rawqc=expand("results/raw_fastq_qc/{sample}_R1_fastqc.html", sample=config["read1"]),
-        trimqc=expand("results/trim_fastq_qc/{sample}_R1.trimmed_fastqc.html", sample=config["read1"]),
-        bam=expand("results/star_align/{sample}/{sample}.Aligned.sortedByCoord.out.bam", sample=config["read1"]),
-        bamqc=expand("results/bam_qc/{sample}.rRNA_stat.txt", sample=config["read1"]),
-        fpkm=expand("results/cufflinks_fpkm/{sample}/genes.fpkm_tracking", sample=config["read1"]),
-        counts=expand("results/htseq_count_reads/{sample}.genes.HTSeq.count", sample=config["read1"]),
-        mutiqc="results/multiqc/multiqc_report.html",
-        fpkmsum="results/summarize_fpkm/expression.genes.xlsx",
-        countssum="results/summarize_counts/raw_counts_genes.txt.gz"
+        rawqc=expand("results/{project}/raw_fastq_qc/{sample}_R1_fastqc.html", project=config["project"], sample=config["read1"]),
+        trimqc=expand("results/{project}/trim_fastq_qc/{sample}_R1.trimmed_fastqc.html", project=config["project"], sample=config["read1"]),
+        bam=expand("results/{project}/star_align/{sample}/{sample}.Aligned.sortedByCoord.out.bam", project=config["project"], sample=config["read1"]),
+        bamqc=expand("results/{project}/bam_qc/{sample}.rRNA_stat.txt", project=config["project"], sample=config["read1"]),
+        fpkm=expand("results/{project}/cufflinks_fpkm/{sample}/genes.fpkm_tracking", project=config["project"], sample=config["read1"]),
+        counts=expand("results/{project}/htseq_count_reads/{sample}.genes.HTSeq.count", project=config["project"], sample=config["read1"]),
+        mutiqc=expand("results/{project}/multiqc/multiqc_report.html", project=config["project"]),
+        fpkmsum=expand("results/{project}/summarize_fpkm/expression.genes.xlsx", project=config["project"]),
+        countssum=expand("results/{project}/summarize_counts/raw_counts_genes.txt.gz", project=config["project"])
 
 rule rename_fastq:
     input:
         read1=get_read1_file,
         read2=get_read2_file
     output:
-        read1=temp("results/rename_fastq/{sample}_R1.fastq.gz"),
-        read2=temp("results/rename_fastq/{sample}_R2.fastq.gz")
+        read1=temp("results/{project}/rename_fastq/{sample}_R1.fastq.gz"),
+        read2=temp("results/{project}/rename_fastq/{sample}_R2.fastq.gz")
     shell:
         "cp {input.read1} {output.read1}; "
         "cp {input.read2} {output.read2}"
 
 rule raw_fastq_qc:
     input:
-        read1="results/rename_fastq/{sample}_R1.fastq.gz",
-        read2="results/rename_fastq/{sample}_R2.fastq.gz"
+        read1="results/{project}/rename_fastq/{sample}_R1.fastq.gz",
+        read2="results/{project}/rename_fastq/{sample}_R2.fastq.gz"
     output:
-        out1="results/raw_fastq_qc/{sample}_R1_fastqc.html",
-        out2="results/raw_fastq_qc/{sample}_R2_fastqc.html"
+        out1="results/{project}/raw_fastq_qc/{sample}_R1_fastqc.html",
+        out2="results/{project}/raw_fastq_qc/{sample}_R2_fastqc.html"
     log:
-        "results/logs/raw_fastq_qc/{sample}.log"
+        "results/{project}/logs/raw_fastq_qc/{sample}.log"
     conda:
         "../envs/fastqc.yaml"
     threads: 4
     shell:
-        "fastqc --outdir results/raw_fastq_qc --threads {threads} --quiet {input.read1} {input.read2} >{log} 2>&1"
+        "fastqc --outdir results/{project}/raw_fastq_qc --threads {threads} --quiet {input.read1} {input.read2} >{log} 2>&1"
 
 rule trim_adapter:
     input:
-        read1="results/rename_fastq/{sample}_R1.fastq.gz",
-        read2="results/rename_fastq/{sample}_R2.fastq.gz"
+        read1="results/{project}/rename_fastq/{sample}_R1.fastq.gz",
+        read2="results/{project}/rename_fastq/{sample}_R2.fastq.gz"
     output:
-        read1=temp("results/trim_fastq/{sample}_R1.trimmed.fastq.gz"),
-        read2=temp("results/trim_fastq/{sample}_R2.trimmed.fastq.gz")
+        read1=temp("results/{project}/trim_fastq/{sample}_R1.trimmed.fastq.gz"),
+        read2=temp("results/{project}/trim_fastq/{sample}_R2.trimmed.fastq.gz")
     params:
         overlap=config["overlap"],
         adapter3=config["adapter3"],
@@ -58,7 +60,7 @@ rule trim_adapter:
         minlen=config["minlen"],
         qscore=config["qscore"]
     log:
-        "results/logs/trim_fastq/{sample}.log",
+        "results/{project}/logs/trim_fastq/{sample}.log",
     threads: 4
     conda:
         "../envs/cutadapt.yaml"
@@ -67,30 +69,30 @@ rule trim_adapter:
 
 rule trim_fastq_qc:
     input:
-        read1="results/trim_fastq/{sample}_R1.trimmed.fastq.gz",
-        read2="results/trim_fastq/{sample}_R2.trimmed.fastq.gz"
+        read1="results/{project}/trim_fastq/{sample}_R1.trimmed.fastq.gz",
+        read2="results/{project}/trim_fastq/{sample}_R2.trimmed.fastq.gz"
     output:
-        out1="results/trim_fastq_qc/{sample}_R1.trimmed_fastqc.html",
-        out2="results/trim_fastq_qc/{sample}_R2.trimmed_fastqc.html"
+        out1="results/{project}/trim_fastq_qc/{sample}_R1.trimmed_fastqc.html",
+        out2="results/{project}/trim_fastq_qc/{sample}_R2.trimmed_fastqc.html"
     log:
-        "results/logs/trim_fastq_qc/{sample}.log"
+        "results/{project}/logs/trim_fastq_qc/{sample}.log"
     conda:
         "../envs/fastqc.yaml"
     threads: 4
     shell:
-        "fastqc --outdir results/trim_fastq_qc --threads {threads} --quiet {input.read1} {input.read2} >{log} 2>&1"
+        "fastqc --outdir results/{project}/trim_fastq_qc --threads {threads} --quiet {input.read1} {input.read2} >{log} 2>&1"
 
 rule star_align:
     input:
-        read1="results/trim_fastq/{sample}_R1.trimmed.fastq.gz",
-        read2="results/trim_fastq/{sample}_R2.trimmed.fastq.gz"
+        read1="results/{project}/trim_fastq/{sample}_R1.trimmed.fastq.gz",
+        read2="results/{project}/trim_fastq/{sample}_R2.trimmed.fastq.gz"
     output:
-        bam="results/star_align/{sample}/{sample}.Aligned.sortedByCoord.out.bam",
-        bai="results/star_align/{sample}/{sample}.Aligned.sortedByCoord.out.bam.bai"
+        bam="results/{project}/star_align/{sample}/{sample}.Aligned.sortedByCoord.out.bam",
+        bai="results/{project}/star_align/{sample}/{sample}.Aligned.sortedByCoord.out.bam.bai"
     log:
-        bam="results/logs/star_align/{sample}.star.log",
-        bai="results/logs/star_align/{sample}.samtools.log",
-        err="results/logs/star_align/{sample}.err.log"
+        bam="results/{project}/logs/star_align/{sample}.star.log",
+        bai="results/{project}/logs/star_align/{sample}.samtools.log",
+        err="results/{project}/logs/star_align/{sample}.err.log"
     conda:
         "../envs/star.yaml"
     threads: 8
@@ -99,36 +101,39 @@ rule star_align:
 
 rule bam_qc:
     input:
-        bam="results/star_align/{sample}/{sample}.Aligned.sortedByCoord.out.bam"
+        bam="results/{project}/star_align/{sample}/{sample}.Aligned.sortedByCoord.out.bam"
     output:
-        stat="results/bam_qc/{sample}.bam_stats.txt",
-        gcov="results/bam_qc/{sample}.geneBodyCoverage.curves.png",
-        rdis="results/bam_qc/{sample}.read_distribution.txt",
-        rrna="results/bam_qc/{sample}.rRNA_stat.txt"
+        stat="results/{project}/bam_qc/{sample}.bam_stats.txt",
+        gcov="results/{project}/bam_qc/{sample}.geneBodyCoverage.curves.png",
+        rdis="results/{project}/bam_qc/{sample}.read_distribution.txt",
+        rrna="results/{project}/bam_qc/{sample}.rRNA_stat.txt",
+        strand="results/{project}/bam_qc/{sample}.strandness.txt"
     params:
         hkgs=config["hkgs"],
         rsgs=config["rsgs"],
         rrnas=config["rrnas"]
     log:
-        stat="results/logs/bam_qc/{sample}.bam_stat.log",
-        gcov="results/logs/bam_qc/{sample}.geneBody_coverage.log",
-        rdis="results/logs/bam_qc/{sample}.read_distribution.log",
-        rrna="results/logs/bam_qc/{sample}.rRNA_stat.log"
+        stat="results/{project}/logs/bam_qc/{sample}.bam_stat.log",
+        gcov="results/{project}/logs/bam_qc/{sample}.geneBody_coverage.log",
+        rdis="results/{project}/logs/bam_qc/{sample}.read_distribution.log",
+        rrna="results/{project}/logs/bam_qc/{sample}.rRNA_stat.log",
+        strand="results/{project}/logs/bam_qc/{sample}.infer_experiment.log"
     conda:
         "../envs/rseqc.yaml"
     shell:
         "bam_stat.py -i {input.bam} >{output.stat} 2>{log.stat}; "
-        "geneBody_coverage.py -r {params.hkgs} -i {input.bam} -o results/bam_qc/{wildcards.sample} -f png >{log.gcov} 2>&1; "
+        "geneBody_coverage.py -r {params.hkgs} -i {input.bam} -o results/{project}/bam_qc/{wildcards.sample} -f png >{log.gcov} 2>&1; "
         "read_distribution.py -i {input.bam} -r {params.rsgs} >{output.rdis} 2>{log.rdis}; "
-        "split_bam.py -i {input.bam} -r {params.rrnas} -o results/bam_qc/{wildcards.sample}.rRNA >{output.rrna} 2>{log.rrna}; "
-        "rm results/bam_qc/{wildcards.sample}.rRNA*.bam; "
+        "split_bam.py -i {input.bam} -r {params.rrnas} -o results/{project}/bam_qc/{wildcards.sample}.rRNA >{output.rrna} 2>{log.rrna}; "
+        "rm results/{project}/bam_qc/{wildcards.sample}.rRNA*.bam; "
+        "infer_experiment.py -i {input.bam} -r {params.rsgs} >{output.strand} 2>{log.strand}; "
 
 rule cufflinks_fpkm:
     input:
-        bam="results/star_align/{sample}/{sample}.Aligned.sortedByCoord.out.bam"
+        bam="results/{project}/star_align/{sample}/{sample}.Aligned.sortedByCoord.out.bam"
     output:
-        genes="results/cufflinks_fpkm/{sample}/genes.fpkm_tracking",
-        isoforms="results/cufflinks_fpkm/{sample}/isoforms.fpkm_tracking"
+        genes="results/{project}/cufflinks_fpkm/{sample}/genes.fpkm_tracking",
+        isoforms="results/{project}/cufflinks_fpkm/{sample}/isoforms.fpkm_tracking"
     params:
         refgtf=config["refgtf"],
         refseq=config["refseq"],
@@ -136,12 +141,13 @@ rule cufflinks_fpkm:
         maxBFrag=config["maxBFrag"],
         libtype=config["libtype"]
     log:
-        "results/logs/cufflinks_fpkm/{sample}.cufflinks.log"
+        "results/{project}/logs/cufflinks_fpkm/{sample}.cufflinks.log"
     conda:
         "../envs/cufflinks.yaml"
     threads: 8
     shell:
-        "cufflinks --output-dir results/cufflinks_fpkm/{wildcards.sample} --num-threads {threads} "
+        "rm -f {log}*; "
+        "cufflinks --output-dir results/{project}/cufflinks_fpkm/{wildcards.sample} --num-threads {threads} "
         "--GTF {params.refgtf} --compatible-hits-norm  --max-bundle-frags {params.maxBFrag} --upper-quartile-norm "
         "--frag-bias-correct {params.refseq} --multi-read-correct --library-type {params.libtype} --mask-file {params.maskgtf} "
         "{input.bam} >{log} 2>&1; "
@@ -149,16 +155,16 @@ rule cufflinks_fpkm:
 
 rule htseq_count_reads:
     input:
-        bam="results/star_align/{sample}/{sample}.Aligned.sortedByCoord.out.bam"
+        bam="results/{project}/star_align/{sample}/{sample}.Aligned.sortedByCoord.out.bam"
     output:
-        counts="results/htseq_count_reads/{sample}.genes.HTSeq.count"
+        counts="results/{project}/htseq_count_reads/{sample}.genes.HTSeq.count"
     params:
         libtype=config["libtype"],
         minaqual=config["minaqual"],
         refgtf=config["refgtf"],
         mem=config["mem"]
     log:
-        htseq="results/logs/htseq_count_reads/{sample}.HTSeq.log.gz"
+        htseq="results/{project}/logs/htseq_count_reads/{sample}.HTSeq.log.gz"
     conda:
         "../envs/htseq.yaml"
     threads: 8
@@ -167,31 +173,31 @@ rule htseq_count_reads:
 
 rule multiqc:
     input:
-        rawfqqc=expand("results/raw_fastq_qc/{sample}_R1_fastqc.html", sample=config["read1"]),
-        staralign=expand("results/star_align/{sample}/{sample}.Aligned.sortedByCoord.out.bam", sample=config["read1"]),
-        bamqc=expand("results/bam_qc/{sample}.read_distribution.txt", sample=config["read1"]),
-        htcount=expand("results/htseq_count_reads/{sample}.genes.HTSeq.count", sample=config["read1"])
+        rawfqqc=expand("results/{project}/raw_fastq_qc/{sample}_R1_fastqc.html", project=config["project"], sample=config["read1"]),
+        staralign=expand("results/{project}/star_align/{sample}/{sample}.Aligned.sortedByCoord.out.bam", project=config["project"], sample=config["read1"]),
+        bamqc=expand("results/{project}/bam_qc/{sample}.read_distribution.txt", project=config["project"], sample=config["read1"]),
+        htcount=expand("results/{project}/htseq_count_reads/{sample}.genes.HTSeq.count", project=config["project"], sample=config["read1"])
     output:
-        html="results/multiqc/multiqc_report.html"
+        html=expand("results/{project}/multiqc/multiqc_report.html", project=config["project"])
     log:
-        "results/logs/multiqc/multiqc.log"
+        expand("results/{project}/logs/multiqc/multiqc.log", project=config["project"])
     conda:
         "../envs/multiqc.yaml"
     shell:
-        """multiqc results/raw_fastq_qc/ results/star_align/ results/bam_qc/ results/htseq_count_reads/ """
+        """multiqc results/{project}/raw_fastq_qc/ results/{project}/star_align/ results/{project}/bam_qc/ results/{project}/htseq_count_reads/ """
         """--ignore "*_STARpass1" """
-        """-o results/multiqc >{log} 2>&1"""
+        """-o results/{project}/multiqc >{log} 2>&1"""
 
 rule summarize_fpkm:
     input:
-        gene=expand("results/cufflinks_fpkm/{sample}/genes.fpkm_tracking", sample=config["read1"]),
-        isoform=expand("results/cufflinks_fpkm/{sample}/isoforms.fpkm_tracking", sample=config["read1"])
+        gene=expand("results/{project}/cufflinks_fpkm/{sample}/genes.fpkm_tracking", project=config["project"], sample=config["read1"]),
+        isoform=expand("results/{project}/cufflinks_fpkm/{sample}/isoforms.fpkm_tracking", project=config["project"], sample=config["read1"])
     output:
-        gene="results/summarize_fpkm/expression.genes.xlsx",
-        isoform="results/summarize_fpkm/expression.isoforms.xlsx",
-        box="results/summarize_fpkm/fpkm.genes.boxplot.png"
+        gene=expand("results/{project}/summarize_fpkm/expression.genes.xlsx", project=config["project"]),
+        isoform=expand("results/{project}/summarize_fpkm/expression.isoforms.xlsx", project=config["project"]),
+        box=expand("results/{project}/summarize_fpkm/fpkm.genes.boxplot.png", project=config["project"])
     log:
-        "results/logs/summarize_fpkm/summarize_fpkm.log"
+        expand("results/{project}/logs/summarize_fpkm/summarize_fpkm.log", project=config["project"])
     conda:
         "../envs/python.yaml"
     script:
@@ -199,12 +205,12 @@ rule summarize_fpkm:
 
 rule summarize_counts:
     input:
-        counts=expand("results/htseq_count_reads/{sample}.genes.HTSeq.count", sample=config["read1"])
+        counts=expand("results/{project}/htseq_count_reads/{sample}.genes.HTSeq.count", project=config["project"], sample=config["read1"])
     output:
-        counts="results/summarize_counts/raw_counts_genes.txt.gz",
-        other="results/summarize_counts/raw_counts_other.txt.gz"
+        counts=expand("results/{project}/summarize_counts/raw_counts_genes.txt.gz", project=config["project"]),
+        other=expand("results/{project}/summarize_counts/raw_counts_other.txt.gz", project=config["project"])
     log:
-        "results/logs/summarize_counts/summarize_counts.log"
+        expand("results/{project}/logs/summarize_counts/summarize_counts.log", project=config["project"])
     conda:
         "../envs/python.yaml"
     script:
