@@ -27,13 +27,13 @@ refann_file = snakemake.config['refann']
 grpdic = snakemake.config["group"]
 
 # output merged FPKM gene table
-merged_fpkm_gene_file = snakemake.output['gene']
+merged_fpkm_gene_file = str(snakemake.output['gene'])
 
 # output merged FPKM isoform table
-merged_fpkm_isoform_file = snakemake.output['isoform']
+merged_fpkm_isoform_file = str(snakemake.output['isoform'])
 
 # output box plot
-out_box_file = snakemake.output['box']
+out_box_file = str(snakemake.output['box'])
 
 # log file
 log_file = snakemake.log[0]
@@ -55,8 +55,8 @@ def merge_fpkm(fpkm_files):
     fpkm_list = []
     for fpkm_file in fpkm_files:
         # extract sample id
-        ##results/cufflinks_fpkm/DMSO_1/genes.fpkm_tracking
-        sid = fpkm_file.split('/')[2]
+        ##results/project/cufflinks_fpkm/DMSO_1/genes.fpkm_tracking
+        sid = fpkm_file.split('/')[-2]
         print('Load {}: '.format(fpkm_file), end='')
         # read into dataframe
         fpkm = pd.read_table(fpkm_file, header=0, sep='\t', low_memory=False)
@@ -88,7 +88,7 @@ def write_fpkm(fpkm_table, out_file, sheet_name='gene'):
     with pd.ExcelWriter(out_file, engine='xlsxwriter') as writer:
         fpkm_table.to_excel(writer, sheet_name=sheet_name, index=False)
         # apply format
-        nrows, ncols = annotated_merged_fpkm_gene.shape
+        nrows, ncols = fpkm_table.shape
         worksheet = writer.sheets[sheet_name]
         worksheet.set_column(0, 0, 16)
         worksheet.set_column(1, 1, 16)
