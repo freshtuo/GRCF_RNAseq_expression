@@ -17,10 +17,10 @@ counts_files = snakemake.input['counts']
 refann_file = snakemake.config['refann']
 
 # output merged counts table
-merged_counts_file = snakemake.output['counts']
+merged_counts_file = str(snakemake.output['counts'])
 
 # output merged other info table (e.g. '__no_feature')
-merged_other_file = snakemake.output['other']
+merged_other_file = str(snakemake.output['other'])
 
 # log file
 log_file = snakemake.log[0]
@@ -32,8 +32,8 @@ def merge_counts(counts_files):
     counts_list = []
     for counts_file in counts_files:
         # extract sample id
-        ##results/htseq_count_reads/DMSO_1.genes.HTSeq.count
-        sid = counts_file.split('/')[2].replace('.genes.HTSeq.count','')
+        ##results/project/htseq_count_reads/DMSO_1.genes.HTSeq.count
+        sid = counts_file.split('/')[-1].replace('.genes.HTSeq.count','')
         print('Load {}: '.format(counts_file), end='')
         # read into dataframe
         counts = pd.read_table(counts_file, header=None, sep='\t', names=['gene_id',sid], low_memory=False)
