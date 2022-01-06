@@ -135,6 +135,7 @@ rule cufflinks_fpkm:
         genes="results/{project}/cufflinks_fpkm/{sample}/genes.fpkm_tracking",
         isoforms="results/{project}/cufflinks_fpkm/{sample}/isoforms.fpkm_tracking"
     params:
+        prog=config["cufflinks"],
         refgtf=config["refgtf"],
         refseq=config["refseq"],
         maskgtf=config["maskgtf"],
@@ -142,12 +143,10 @@ rule cufflinks_fpkm:
         libtype=config["libtype"]
     log:
         "results/{project}/logs/cufflinks_fpkm/{sample}.cufflinks.log"
-    conda:
-        "../envs/cufflinks.yaml"
     threads: 8
     shell:
         "rm -f {log}*; "
-        "cufflinks --output-dir results/{project}/cufflinks_fpkm/{wildcards.sample} --num-threads {threads} "
+        "{prog} --output-dir results/{project}/cufflinks_fpkm/{wildcards.sample} --num-threads {threads} "
         "--GTF {params.refgtf} --compatible-hits-norm  --max-bundle-frags {params.maxBFrag} --upper-quartile-norm "
         "--frag-bias-correct {params.refseq} --multi-read-correct --library-type {params.libtype} --mask-file {params.maskgtf} "
         "{input.bam} >{log} 2>&1; "

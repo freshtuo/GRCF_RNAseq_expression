@@ -3,5 +3,5 @@ channels:
     - conda-forge
 dependencies:
     - python=3.9
-    - htseq=0.13.5
-    - samtools=1.13
+    - htseq=0.11.2
+    - samtools=1.9
