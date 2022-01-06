@@ -29,7 +29,7 @@ libtype: fr-firststrand
 
 # cutadapt parameters
 overlap: 5
-minlen: 35
+minlen: 45
 qscore: 10
 adapter3: AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC
 adapter5: AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT
@@ -47,6 +47,7 @@ rsgs: /data/gc-core/taz2008/Softwares/RSeQC-2.6.2/db/GRCh37_RefSeq.bed
 rrnas: /data/gc-core/taz2008/Softwares/RSeQC-2.6.2/db/GRCh37_rRNA.bed
 
 # Cufflinks parameters
+cufflinks: /data/gc-core/taz2008/Softwares/cufflinks-2.1.1.Linux_x86_64/cufflinks
 refgtf: /data/gc-core/taz2008/RNAseq/Project_Shuibing_200401_ANALYSIS/custom_ref/Annotation/Genes/gene.gtf
 refseq: /data/gc-core/taz2008/RNAseq/Project_Shuibing_200401_ANALYSIS/custom_ref/Sequence/WholeGenomeFasta/genome.fa
 maskgtf: /data/gc-core/database/Refs/Homo_sapiens/Ensembl/GRCh37/Annotation/Genes/mask/GRCh37.rRNA.tRNA.chrM.gtf
