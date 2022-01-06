@@ -13,12 +13,12 @@ seqtype = 'SE'
 
 # input fastq files
 fq_files = snakemake.input['read1']
-if 'read2' in snakemake.input:
+if len(snakemake.input) > 1:
     seqtype = 'PE'
     fq_files = '{} {}'.format(snakemake.input['read1'], snakemake.input['read2'])
 
 # wildcards.sample
-sample = snakemake.wildcards
+sample = snakemake.wildcards[1]
 
 # output bam file
 bamfile = snakemake.output['bam']
@@ -73,6 +73,7 @@ def run_command(command):
 # run
 with open(err_log_file, 'w') as flog:
     with redirect_stdout(flog):
+        print('This is a {} run.'.format(seqtype))
         # run STAR
         run_command(star_command)
         # zip unmapped reads
