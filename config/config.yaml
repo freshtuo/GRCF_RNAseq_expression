@@ -14,6 +14,9 @@ read2:
     HX531_2: data/fastq/Airway_plus_HX531_2_S0_L000_R2_001.fastq.gz
     HX531_3: data/fastq/Airway_plus_HX531_3_S0_L000_R2_001.fastq.gz
 
+# project name (use to nameoutput folder)
+project: 'test'
+
 # sample grouping information
 group:
     DMSO: ['DMSO_1','DMSO_2','DMSO_3']
