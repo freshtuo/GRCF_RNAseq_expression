@@ -53,13 +53,13 @@ def annotate_genes(merged_table, refann_file):
     # read in reference annotations
     refann = pd.read_table(refann_file, header=0, sep='\t', low_memory=False)
     # rename columns
-    refann.rename(columns={'Gene stable ID':'gene_id','Chromosome/scaffold name':'chromosome','Gene type':'gene_type','Gene description':'description'}, inplace=True)
+    refann.rename(columns={'Gene stable ID':'gene_id','Chromosome/scaffold name':'chromosome','Gene type':'gene_type','Gene description':'description','Gene name':'gene_name'}, inplace=True)
     # fix strand info
     refann['strand'] = refann['Strand'].apply(lambda x: '+' if x > 0 else '-')
     # dedup (use the first entry in case multiple annotations are found for a give ensembl id)
     refann.drop_duplicates(subset=['gene_id'], keep='first', inplace=True)
     # merge annotations into the FPKM table
-    return pd.merge(merged_table, refann[['gene_id','chromosome','strand','gene_type','description']], how='left', on='gene_id')
+    return pd.merge(merged_table, refann[['gene_id','gene_name','chromosome','strand','gene_type','description']], how='left', on='gene_id')
 
 def write_counts(counts_table, out_counts_file, out_other_file):
     """write counts table to a text file"""
