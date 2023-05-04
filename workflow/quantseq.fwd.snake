@@ -1,7 +1,7 @@
 # QuantSeq FWD (modified based on SE.snake)
 # main changes: 1) adapter trimming follow the official suggestions
 #               2) skip FPKM calculation (since 3'-target kit)
-configfile: "config/config.yaml"
+configfile: "config/config.quantseq.fwd.yaml"
 
 def get_read1_file(wildcards):
     return config["read1"][wildcards.sample]
@@ -58,9 +58,9 @@ rule trim_adapter:
     conda:
         "../envs/cutadapt.yaml"
     shell:
-        """cutadapt -j {threads} -O 20 -m {params.minlen} -a "polyA=A{20}" -a "QUALITY=G{20}" -n 2 {input.read1} | """
-        """cutadapt -j {threads} -O 3 -m {params.minlen} --nextseq-trim={params.qscore} -a "r1adapter=A{18}AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC;min_overlap=3;max_error_rate=0.100000" - | """
-        """cutadapt -j {threads} -O 20 -m {params.minlen} -g "r1adapter=AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC;min_overlap=20"--discard-trimmed -o {output.read1} - >{log} 2>&1; """
+        """cutadapt -j {threads} -O 20 -m {params.minlen} -a "polyA=A{{20}}" -a "QUALITY=G{{20}}" -n 2 {input.read1} | """
+        """cutadapt -j {threads} -O 3 -m {params.minlen} --nextseq-trim={params.qscore} -a "r1adapter=A{{18}}AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC;min_overlap=3;max_error_rate=0.100000" - | """
+        """cutadapt -j {threads} -O 20 -m {params.minlen} -g "r1adapter=AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC;min_overlap=20" --discard-trimmed -o {output.read1} - >{log} 2>&1; """
 
 rule trim_fastq_qc:
     input:

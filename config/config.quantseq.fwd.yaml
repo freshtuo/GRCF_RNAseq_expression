@@ -1,0 +1,94 @@
+# input fastq files
+read1:
+    Patient1_Case_DOS: /data/gc-core/taz2008/RNAseq/Project_Otero-SL-12594_230109_ANALYSIS_V2/data/1_1_S17_L000_R1_001.fastq.gz
+    Patient1_Case_POD1: /data/gc-core/taz2008/RNAseq/Project_Otero-SL-12594_230109_ANALYSIS_V2/data/1_3_S18_L000_R1_001.fastq.gz
+    Patient100_Control_DOS: /data/gc-core/taz2008/RNAseq/Project_Otero-SL-12594_230109_ANALYSIS_V2/data/100_1_S23_L000_R1_001.fastq.gz
+    Patient100_Control_POD1: /data/gc-core/taz2008/RNAseq/Project_Otero-SL-12594_230109_ANALYSIS_V2/data/100_3_S24_L000_R1_001.fastq.gz
+    Patient106_Case_DOS: /data/gc-core/taz2008/RNAseq/Project_Otero-SL-12594_230109_ANALYSIS_V2/data/106_1_S1_L000_R1_001.fastq.gz
+    Patient106_Case_POD1: /data/gc-core/taz2008/RNAseq/Project_Otero-SL-12594_230109_ANALYSIS_V2/data/106_3_S2_L000_R1_001.fastq.gz
+    Patient112_Control_DOS: /data/gc-core/taz2008/RNAseq/Project_Otero-SL-12594_230109_ANALYSIS_V2/data/112_1_S29_L000_R1_001.fastq.gz
+    Patient112_Control_POD1: /data/gc-core/taz2008/RNAseq/Project_Otero-SL-12594_230109_ANALYSIS_V2/data/112_3_S30_L000_R1_001.fastq.gz
+    Patient115_Case_DOS: /data/gc-core/taz2008/RNAseq/Project_Otero-SL-12594_230109_ANALYSIS_V2/data/115_1_S3_L000_R1_001.fastq.gz
+    Patient115_Case_POD1: /data/gc-core/taz2008/RNAseq/Project_Otero-SL-12594_230109_ANALYSIS_V2/data/115_3_S4_L000_R1_001.fastq.gz
+    Patient125_Control_DOS: /data/gc-core/taz2008/RNAseq/Project_Otero-SL-12594_230109_ANALYSIS_V2/data/125_1_S39_L000_R1_001.fastq.gz
+    Patient125_Control_POD1: /data/gc-core/taz2008/RNAseq/Project_Otero-SL-12594_230109_ANALYSIS_V2/data/125_3_S40_L000_R1_001.fastq.gz
+    Patient128_Case_DOS: /data/gc-core/taz2008/RNAseq/Project_Otero-SL-12594_230109_ANALYSIS_V2/data/128_1_S19_L000_R1_001.fastq.gz
+    Patient128_Case_POD1: /data/gc-core/taz2008/RNAseq/Project_Otero-SL-12594_230109_ANALYSIS_V2/data/128_3_S20_L000_R1_001.fastq.gz
+    Patient140_Case_DOS: /data/gc-core/taz2008/RNAseq/Project_Otero-SL-12594_230109_ANALYSIS_V2/data/140_1_S21_L000_R1_001.fastq.gz
+    Patient140_Case_POD1: /data/gc-core/taz2008/RNAseq/Project_Otero-SL-12594_230109_ANALYSIS_V2/data/140_3_S22_L000_R1_001.fastq.gz
+    Patient144_Case_DOS: /data/gc-core/taz2008/RNAseq/Project_Otero-SL-12594_230109_ANALYSIS_V2/data/144_1_S5_L000_R1_001.fastq.gz
+    Patient144_Case_POD1: /data/gc-core/taz2008/RNAseq/Project_Otero-SL-12594_230109_ANALYSIS_V2/data/144_3_S6_L000_R1_001.fastq.gz
+    Patient146_Control_DOS: /data/gc-core/taz2008/RNAseq/Project_Otero-SL-12594_230109_ANALYSIS_V2/data/146_1_S43_L000_R1_001.fastq.gz
+    Patient146_Control_POD1: /data/gc-core/taz2008/RNAseq/Project_Otero-SL-12594_230109_ANALYSIS_V2/data/146_3_S44_L000_R1_001.fastq.gz
+    Patient170_Case_DOS: /data/gc-core/taz2008/RNAseq/Project_Otero-SL-12594_230109_ANALYSIS_V2/data/170_1_S15_L000_R1_001.fastq.gz
+    Patient170_Case_POD1: /data/gc-core/taz2008/RNAseq/Project_Otero-SL-12594_230109_ANALYSIS_V2/data/170_3_S16_L000_R1_001.fastq.gz
+    Patient22_Control_DOS: /data/gc-core/taz2008/RNAseq/Project_Otero-SL-12594_230109_ANALYSIS_V2/data/22_1_S31_L000_R1_001.fastq.gz
+    Patient22_Control_POD1: /data/gc-core/taz2008/RNAseq/Project_Otero-SL-12594_230109_ANALYSIS_V2/data/22_3_S32_L000_R1_001.fastq.gz
+    Patient36_Case_DOS: /data/gc-core/taz2008/RNAseq/Project_Otero-SL-12594_230109_ANALYSIS_V2/data/36_1_S7_L000_R1_001.fastq.gz
+    Patient36_Case_POD1: /data/gc-core/taz2008/RNAseq/Project_Otero-SL-12594_230109_ANALYSIS_V2/data/36_3_S8_L000_R1_001.fastq.gz
+    Patient39_Control_DOS: /data/gc-core/taz2008/RNAseq/Project_Otero-SL-12594_230109_ANALYSIS_V2/data/39_1_S41_L000_R1_001.fastq.gz
+    Patient39_Control_POD1: /data/gc-core/taz2008/RNAseq/Project_Otero-SL-12594_230109_ANALYSIS_V2/data/39_3_S42_L000_R1_001.fastq.gz
+    Patient4_Control_DOS: /data/gc-core/taz2008/RNAseq/Project_Otero-SL-12594_230109_ANALYSIS_V2/data/4_1_S33_L000_R1_001.fastq.gz
+    Patient4_Control_POD1: /data/gc-core/taz2008/RNAseq/Project_Otero-SL-12594_230109_ANALYSIS_V2/data/4_3_S34_L000_R1_001.fastq.gz
+    Patient49_Case_DOS: /data/gc-core/taz2008/RNAseq/Project_Otero-SL-12594_230109_ANALYSIS_V2/data/49_1_S9_L000_R1_001.fastq.gz
+    Patient49_Case_POD1: /data/gc-core/taz2008/RNAseq/Project_Otero-SL-12594_230109_ANALYSIS_V2/data/49_3_S10_L000_R1_001.fastq.gz
+    Patient50_Control_DOS: /data/gc-core/taz2008/RNAseq/Project_Otero-SL-12594_230109_ANALYSIS_V2/data/50_1_S37_L000_R1_001.fastq.gz
+    Patient50_Control_POD1: /data/gc-core/taz2008/RNAseq/Project_Otero-SL-12594_230109_ANALYSIS_V2/data/50_3_S38_L000_R1_001.fastq.gz
+    Patient56_Control_DOS: /data/gc-core/taz2008/RNAseq/Project_Otero-SL-12594_230109_ANALYSIS_V2/data/56_1_S35_L000_R1_001.fastq.gz
+    Patient56_Control_POD1: /data/gc-core/taz2008/RNAseq/Project_Otero-SL-12594_230109_ANALYSIS_V2/data/56_3_S36_L000_R1_001.fastq.gz
+    Patient57_Control_DOS: /data/gc-core/taz2008/RNAseq/Project_Otero-SL-12594_230109_ANALYSIS_V2/data/57_1_S27_L000_R1_001.fastq.gz
+    Patient57_Control_POD1: /data/gc-core/taz2008/RNAseq/Project_Otero-SL-12594_230109_ANALYSIS_V2/data/57_3_S28_L000_R1_001.fastq.gz
+    Patient6_Control_DOS: /data/gc-core/taz2008/RNAseq/Project_Otero-SL-12594_230109_ANALYSIS_V2/data/6_1_S25_L000_R1_001.fastq.gz
+    Patient6_Control_POD1: /data/gc-core/taz2008/RNAseq/Project_Otero-SL-12594_230109_ANALYSIS_V2/data/6_3_S26_L000_R1_001.fastq.gz
+    Patient61_Case_DOS: /data/gc-core/taz2008/RNAseq/Project_Otero-SL-12594_230109_ANALYSIS_V2/data/61_1_S11_L000_R1_001.fastq.gz
+    Patient61_Case_POD1: /data/gc-core/taz2008/RNAseq/Project_Otero-SL-12594_230109_ANALYSIS_V2/data/61_3_S12_L000_R1_001.fastq.gz
+    Patient80_Case_DOS: /data/gc-core/taz2008/RNAseq/Project_Otero-SL-12594_230109_ANALYSIS_V2/data/80_1_S13_L000_R1_001.fastq.gz
+    Patient80_Case_POD1: /data/gc-core/taz2008/RNAseq/Project_Otero-SL-12594_230109_ANALYSIS_V2/data/80_3_S14_L000_R1_001.fastq.gz
+
+# project name (use to nameoutput folder)
+project: 'Otero-SL-12594_230109_V2'
+
+# sample grouping information
+group:
+    Control_DOS: ['Patient100_Control_DOS','Patient112_Control_DOS','Patient125_Control_DOS','Patient146_Control_DOS','Patient22_Control_DOS','Patient39_Control_DOS','Patient4_Control_DOS','Patient50_Control_DOS','Patient56_Control_DOS','Patient57_Control_DOS','Patient6_Control_DOS']
+    Control_POD1: ['Patient100_Control_POD1','Patient112_Control_POD1','Patient125_Control_POD1','Patient146_Control_POD1','Patient22_Control_POD1','Patient39_Control_POD1','Patient4_Control_POD1','Patient50_Control_POD1','Patient56_Control_POD1','Patient57_Control_POD1','Patient6_Control_POD1']
+    Case_DOS: ['Patient1_Case_DOS','Patient106_Case_DOS','Patient115_Case_DOS','Patient128_Case_DOS','Patient140_Case_DOS','Patient144_Case_DOS','Patient170_Case_DOS','Patient36_Case_DOS','Patient49_Case_DOS','Patient61_Case_DOS','Patient80_Case_DOS']
+    Case_POD1: ['Patient1_Case_POD1','Patient106_Case_POD1','Patient115_Case_POD1','Patient128_Case_POD1','Patient140_Case_POD1','Patient144_Case_POD1','Patient170_Case_POD1','Patient36_Case_POD1','Patient49_Case_POD1','Patient61_Case_POD1','Patient80_Case_POD1']
+
+# library type
+#libtype: fr-firststrand
+#libtype: fr-unstranded
+libtype: fr-secondstrand
+
+# cutadapt parameters
+overlap: 5
+minlen: 35
+qscore: 10
+adapter3: AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC
+adapter5: AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT
+
+# STAR parameters
+staridx: /data/gc-core/database/Refs/Homo_sapiens/Ensembl/GRCh37/Sequence/StarIndex/100bp.new
+seedLmax: 30
+multimapNmax: 20
+overhangMin: 5
+DBoverhangMin: 1
+
+# RSeQC parameters
+hkgs: /data/gc-core/taz2008/Softwares/RSeQC-2.6.2/db/GRCh37.HouseKeepingGenes.bed
+rsgs: /data/gc-core/taz2008/Softwares/RSeQC-2.6.2/db/GRCh37_RefSeq.bed
+rrnas: /data/gc-core/taz2008/Softwares/RSeQC-2.6.2/db/GRCh37_rRNA.bed
+
+# Cufflinks parameters
+refgtf: /data/gc-core/database/Refs/Homo_sapiens/Ensembl/GRCh37/Annotation/Genes/Homo_sapiens.GRCh37.82.no_header.gtf
+refseq: /data/gc-core/database/Refs/Homo_sapiens/Ensembl/GRCh37/Sequence/WholeGenomeFasta/genome.fa
+maskgtf: /data/gc-core/database/Refs/Homo_sapiens/Ensembl/GRCh37/Annotation/Genes/mask/GRCh37.rRNA.tRNA.chrM.gtf
+maxBFrag: 100000000
+
+# HTSeq-count parameters
+minaqual: 10
+mem: 1G
+
+# gene annotations
+refann: /data/gc-core/taz2008/Pipelines/RNAseq/GRCF_RNAseq_expression/source/GRCh37.biomart.txt.gz
+
