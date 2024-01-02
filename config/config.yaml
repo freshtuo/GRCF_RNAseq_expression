@@ -1,26 +1,26 @@
 # input fastq files
 read1:
-    DMSO_1: data/fastq/Airway_plus_DMSO_1_S0_L000_R1_001.fastq.gz
-    DMSO_2: data/fastq/Airway_plus_DMSO_2_S0_L000_R1_001.fastq.gz
-    DMSO_3: data/fastq/Airway_plus_DMSO_3_S0_L000_R1_001.fastq.gz
-    HX531_1: data/fastq/Airway_plus_HX531_1_S0_L000_R1_001.fastq.gz
-    HX531_2: data/fastq/Airway_plus_HX531_2_S0_L000_R1_001.fastq.gz
-    HX531_3: data/fastq/Airway_plus_HX531_3_S0_L000_R1_001.fastq.gz
+    B16GM_Cdot1: /data/gc-core/taz2008/RNAseq/Project_Bradbury-GDL-15169_231102_ANALYSIS/fastq/merged/B16GM_Cdot1_S1_L000_R1_001.fastq.gz
+    B16GM_Cdot2: /data/gc-core/taz2008/RNAseq/Project_Bradbury-GDL-15169_231102_ANALYSIS/fastq/merged/B16GM_Cdot2_S2_L000_R1_001.fastq.gz
+    B16GM_Cdot3: /data/gc-core/taz2008/RNAseq/Project_Bradbury-GDL-15169_231102_ANALYSIS/fastq/merged/B16GM_Cdot3_S3_L000_R1_001.fastq.gz
+    B16GM_CT1: /data/gc-core/taz2008/RNAseq/Project_Bradbury-GDL-15169_231102_ANALYSIS/fastq/merged/B16GM_CT1_S4_L000_R1_001.fastq.gz
+    B16GM_CT2: /data/gc-core/taz2008/RNAseq/Project_Bradbury-GDL-15169_231102_ANALYSIS/fastq/merged/B16GM_CT2_S5_L000_R1_001.fastq.gz
+    B16GM_CT3: /data/gc-core/taz2008/RNAseq/Project_Bradbury-GDL-15169_231102_ANALYSIS/fastq/merged/B16GM_CT3_S6_L000_R1_001.fastq.gz
 read2:
-    DMSO_1: data/fastq/Airway_plus_DMSO_1_S0_L000_R2_001.fastq.gz
-    DMSO_2: data/fastq/Airway_plus_DMSO_2_S0_L000_R2_001.fastq.gz
-    DMSO_3: data/fastq/Airway_plus_DMSO_3_S0_L000_R2_001.fastq.gz
-    HX531_1: data/fastq/Airway_plus_HX531_1_S0_L000_R2_001.fastq.gz
-    HX531_2: data/fastq/Airway_plus_HX531_2_S0_L000_R2_001.fastq.gz
-    HX531_3: data/fastq/Airway_plus_HX531_3_S0_L000_R2_001.fastq.gz
+    B16GM_Cdot1: /data/gc-core/taz2008/RNAseq/Project_Bradbury-GDL-15169_231102_ANALYSIS/fastq/merged/B16GM_Cdot1_S1_L000_R2_001.fastq.gz
+    B16GM_Cdot2: /data/gc-core/taz2008/RNAseq/Project_Bradbury-GDL-15169_231102_ANALYSIS/fastq/merged/B16GM_Cdot2_S2_L000_R2_001.fastq.gz
+    B16GM_Cdot3: /data/gc-core/taz2008/RNAseq/Project_Bradbury-GDL-15169_231102_ANALYSIS/fastq/merged/B16GM_Cdot3_S3_L000_R2_001.fastq.gz
+    B16GM_CT1: /data/gc-core/taz2008/RNAseq/Project_Bradbury-GDL-15169_231102_ANALYSIS/fastq/merged/B16GM_CT1_S4_L000_R2_001.fastq.gz
+    B16GM_CT2: /data/gc-core/taz2008/RNAseq/Project_Bradbury-GDL-15169_231102_ANALYSIS/fastq/merged/B16GM_CT2_S5_L000_R2_001.fastq.gz
+    B16GM_CT3: /data/gc-core/taz2008/RNAseq/Project_Bradbury-GDL-15169_231102_ANALYSIS/fastq/merged/B16GM_CT3_S6_L000_R2_001.fastq.gz
 
 # project name (use to nameoutput folder)
 project: 'test'
 
 # sample grouping information
 group:
-    DMSO: ['DMSO_1','DMSO_2','DMSO_3']
-    HX531: ['HX531_1','HX531_2','HX531_3']
+    control: ['B16GM_CT1','B16GM_CT2','B16GM_CT3']
+    treated: ['B16GM_Cdot1','B16GM_Cdot2','B16GM_Cdot3']
 
 # library type
 libtype: fr-firststrand
@@ -31,25 +31,29 @@ libtype: fr-firststrand
 overlap: 5
 minlen: 35
 qscore: 10
+cut5: 0
+cut3: 0
 adapter3: AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC
 adapter5: AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT
+#adapter3: CTGTCTCTTATACACATCT
+#adapter5: CTGTCTCTTATACACATCT
 
 # STAR parameters
-staridx: /data/gc-core/taz2008/RNAseq/Project_Shuibing_200401_ANALYSIS/custom_ref/Sequence/StarIndex/100bp
+staridx: /data/gc-core/database/Refs/Mus_musculus/Ensembl/GRCm38/Sequence/StarIndex/100bp.new
 seedLmax: 30
 multimapNmax: 20
 overhangMin: 5
 DBoverhangMin: 1
 
 # RSeQC parameters
-hkgs: /data/gc-core/taz2008/Softwares/RSeQC-2.6.2/db/GRCh37.HouseKeepingGenes.bed
-rsgs: /data/gc-core/taz2008/Softwares/RSeQC-2.6.2/db/GRCh37_RefSeq.bed
-rrnas: /data/gc-core/taz2008/Softwares/RSeQC-2.6.2/db/GRCh37_rRNA.bed
+hkgs: /data/gc-core/taz2008/Softwares/RSeQC-2.6.2/db/GRCm38.HouseKeepingGenes.bed
+rsgs: /data/gc-core/taz2008/Softwares/RSeQC-2.6.2/db/GRCm38_RefSeq.bed
+rrnas: /data/gc-core/taz2008/Softwares/RSeQC-2.6.2/db/GRCm38_rRNA.bed
 
 # Cufflinks parameters
-refgtf: /data/gc-core/taz2008/RNAseq/Project_Shuibing_200401_ANALYSIS/custom_ref/Annotation/Genes/gene.gtf
-refseq: /data/gc-core/taz2008/RNAseq/Project_Shuibing_200401_ANALYSIS/custom_ref/Sequence/WholeGenomeFasta/genome.fa
-maskgtf: /data/gc-core/database/Refs/Homo_sapiens/Ensembl/GRCh37/Annotation/Genes/mask/GRCh37.rRNA.tRNA.chrM.gtf
+refgtf: /data/gc-core/database/Refs/Mus_musculus/Ensembl/GRCm38/Annotation/Genes/Mus_musculus.GRCm38.86.gtf
+refseq: /data/gc-core/database/Refs/Mus_musculus/Ensembl/GRCm38/Sequence/WholeGenomeFasta/genome.fa
+maskgtf: /data/gc-core/database/Refs/Mus_musculus/Ensembl/GRCm38/Annotation/Genes/mask/GRCm38.rRNA.tRNA.chrM.gtf
 maxBFrag: 100000000
 
 # HTSeq-count parameters
@@ -57,5 +61,5 @@ minaqual: 10
 mem: 1G
 
 # gene annotations
-refann: /data/gc-core/taz2008/Pipelines/RNAseq/GRCF_RNAseq_expression/source/GRCh37.biomart.txt.gz
+refann: /data/gc-core/taz2008/Pipelines/RNAseq/GRCF_RNAseq_expression/source/GRCm38.biomart.txt.gz
 

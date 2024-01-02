@@ -58,14 +58,18 @@ rule trim_adapter:
         adapter3=config["adapter3"],
         adapter5=config["adapter5"],
         minlen=config["minlen"],
-        qscore=config["qscore"]
+        qscore=config["qscore"],
+        cut3=config["cut3"],
+        cut5=config["cut5"]
     log:
         "results/{project}/logs/trim_fastq/{sample}.log",
     threads: 4
     conda:
         "../envs/cutadapt.yaml"
     shell:
-        "cutadapt -j {threads} -O {params.overlap} -m {params.minlen} -q {params.qscore} -a {params.adapter3} -A {params.adapter5} -o {output.read1} -p {output.read2} {input.read1} {input.read2} >{log} 2>&1; "
+        "if [ {params.cut3} -eq 0 -a {params.cut5} -eq 0 ]; "
+        "then cutadapt -j {threads} -O {params.overlap} -m {params.minlen} -q {params.qscore} -a {params.adapter3} -A {params.adapter5} -o {output.read1} -p {output.read2} {input.read1} {input.read2} >{log} 2>&1; "
+        "else cutadapt -j {threads} -O {params.overlap} -m {params.minlen} -q {params.qscore} -a {params.adapter3} -A {params.adapter5} -u {params.cut5} -u -{params.cut3} -o {output.read1} -p {output.read2} {input.read1} {input.read2} >{log} 2>&1; fi"
 
 rule trim_fastq_qc:
     input:
