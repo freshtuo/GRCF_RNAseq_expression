@@ -2,6 +2,6 @@ channels:
     - bioconda
     - conda-forge
 dependencies:
-    - python=3.9
+    - python
     - htseq=0.13.5
-    - samtools=1.13
+    - samtools>1
